@@ -16,8 +16,8 @@ class Racional {
 	int getDenominador();
         void adicao(Racional, Racional);
 	void subtracao(Racional, Racional);
-//	void multiplicacao(Racional, Racional);
-//	void divisao(Racional, Racional);
+	void multiplicacao(Racional, Racional);
+	void divisao(Racional, Racional);
 	void imprimeNumDen();
 	void imprimePontFlut();
 
@@ -25,7 +25,7 @@ class Racional {
 	void reduzNumDen();
 };
 
-// Função privada para reduzir numerador e denominador
+// Método privado para reduzir numerador e denominador
 void Racional::reduzNumDen() {
 
 	for(int i = 2; i < 10; i++) {
@@ -48,19 +48,19 @@ Racional::Racional (int num, int den) {
 	this->reduzNumDen();
 }
 
-// Função para devolver o valor do denominador (este é private)
+// Método para devolver o valor do denominador (este é private)
 int Racional::getNumerador() {
 
 	return numerador;
 }
 
-// Função para devolver o valor do denominador (este é private)
+// Método para devolver o valor do denominador (este é private)
 int Racional::getDenominador() {
 
 	return denominador;
 }
 
-// Função para somar dois números racionais e jogar o resultado na classe que chama o método
+// Método para somar dois números racionais e jogar o resultado na classe que chama o método
 void Racional::adicao(Racional r1, Racional r2) {
 
 	int numNovo, denNovo;
@@ -89,8 +89,8 @@ void Racional::adicao(Racional r1, Racional r2) {
 	this->reduzNumDen();
 }
 
-// Função para subtrair dois números racionais e jogar o resultado na classe que chama o método
-// Obs.: Segue a orgem (r1 - r2) sempre
+// Método para subtrair dois números racionais e jogar o resultado na classe que chama o método
+// Obs.: Segue a ordem (r1 - r2) sempre
 void Racional::subtracao(Racional r1, Racional r2) {
 
 	int numNovo, denNovo;
@@ -119,13 +119,38 @@ void Racional::subtracao(Racional r1, Racional r2) {
 	this->reduzNumDen();
 }
 
-// Função para imprimir racional no formato numerador/denominador
+// Método para multiplicar dois números racionais e jogar o resultado na classe que chama o método
+void Racional::multiplicacao(Racional r1, Racional r2) {
+
+	numerador = r1.getNumerador() * r2.getNumerador();
+	denominador = r1.getDenominador() * r2.getDenominador();
+
+	this->reduzNumDen();
+}
+
+// Método para dividir dois números racionais e jogar o resultado na classe que chama o método
+// Obs.: Segue a ordem (r1 / r2) sempre
+void Racional::divisao(Racional r1, Racional r2) {
+
+	numerador = r1.getNumerador() * r2.getDenominador();
+	denominador = r1.getDenominador() * r2.getNumerador();
+
+	if(denominador < 0) { // Denominador pode ficar negativo pela inversão do r2...
+
+		numerador *= (-1);
+		denominador *= (-1);
+	}
+
+	this->reduzNumDen();
+}
+
+// Método para imprimir racional no formato numerador/denominador
 void Racional::imprimeNumDen() {
 
 	cout << numerador << "/" << denominador << endl;
 }
 
-// Função para imprimir racional no formato de ponto flutuante
+// Método para imprimir racional no formato de ponto flutuante
 void Racional::imprimePontFlut() {
 
 	float num = (float)numerador/(float)denominador;
@@ -144,6 +169,14 @@ int main () {
 	Racional r4(20, 16);
 	Racional r5(18, 3);
 	Racional r6(99, 98);
+
+	Racional r7(1024, 128);
+	Racional r8(6, 4);
+	Racional r9;
+
+	Racional r10(-666, 128);
+	Racional r11(-12);
+	Racional r12;
 
 	r3.adicao(r1, r2);
 
@@ -187,6 +220,50 @@ int main () {
 	cout << endl;
     	cout << "Numero da subtracao (ponto flutuante): ";
 	r6.imprimePontFlut();
+	cout << endl;
+
+	r9.multiplicacao(r7, r8);
+
+    	cout << "Numero 7: "; 
+	r7.imprimeNumDen();
+	cout << endl;
+    	cout << "Numero 8: ";
+	r8.imprimeNumDen();
+	cout << endl;
+    	cout << "Numero da multiplicacao: ";
+	r9.imprimeNumDen();
+	cout << endl;
+
+    	cout << "Numero 7 (ponto flutuante): ";
+	r7.imprimePontFlut();
+	cout << endl;
+    	cout << "Numero 8 (ponto flutuante): ";
+	r8.imprimePontFlut();
+	cout << endl;
+    	cout << "Numero da multiplicacao (ponto flutuante): ";
+	r9.imprimePontFlut();
+	cout << endl;
+
+	r12.divisao(r10, r11);
+
+    	cout << "Numero 10: "; 
+	r10.imprimeNumDen();
+	cout << endl;
+    	cout << "Numero 11: ";
+	r11.imprimeNumDen();
+	cout << endl;
+    	cout << "Numero da divisao: ";
+	r12.imprimeNumDen();
+	cout << endl;
+
+    	cout << "Numero 10 (ponto flutuante): ";
+	r10.imprimePontFlut();
+	cout << endl;
+    	cout << "Numero 11 (ponto flutuante): ";
+	r11.imprimePontFlut();
+	cout << endl;
+    	cout << "Numero da divisao (ponto flutuante): ";
+	r12.imprimePontFlut();
 	cout << endl;
 
     	return 0;
