@@ -1,10 +1,9 @@
 #include <cstdio>
-#include <iostream>
 #include <cmath>
+#include <iostream>
 
 using namespace std;
 
-// Resultado ao rodar: core dumped :(
 
 float calcMedia (float *vet, int n) {
 
@@ -19,25 +18,25 @@ float calcMedia (float *vet, int n) {
 float * retVetLin (float mat[][3], int n, int *tam) {
 
 	float *vet;
-	int k;
+	int k = 0;
 
-	for(int i = 0, k = 0; i < n; i++) {
+	for(int i = 0; i < n; i++) {
 		for(int j = 0; j < 3; j++) {
 
 			if(i % 2 != 0) {
 				if(k == 0) {
 					vet = new float[1];
 					vet[0] = mat[i][j];
-					k++;
 				}
 				else {
 					float *temp = new float[k + 1];
 					copy(vet, vet + k, temp);
 					delete []vet;
 					vet = temp;
-					vet[k + 1] = mat[i][j];
-					k++;
+					vet[k] = mat[i][j];
 				}
+
+				k++;
 			}
 		}
 	}
@@ -49,25 +48,25 @@ float * retVetLin (float mat[][3], int n, int *tam) {
 float * retVetCol (float mat[][3], int n, int *tam) {
 
 	float *vet;
-	int k;
+	int k = 0;
 
-	for(int i = 0, k = 0; i < n; i++) {
+	for(int i = 0; i < n; i++) {
 		for(int j = 0; j < 3; j++) {
 
 			if(j % 2 == 0) {
 				if(k == 0) {
 					vet = new float[1];
 					vet[0] = mat[i][j];
-					k++;
 				}
 				else {
 					float *temp = new float[k + 1];
 					copy(vet, vet + k, temp);
 					delete []vet;
 					vet = temp;
-					vet[k + 1] = mat[i][j];
-					k++;
+					vet[k] = mat[i][j];
 				}
+
+				k++;
 			}
 		}
 	}
@@ -93,12 +92,12 @@ float calcDifMedias (float mat[][3], int n) {
 int main () {
 
 	float mat[5][3] = {1.0 , 2.5 , 3.0 ,
-			   4.5 , 5.0 , 6.5 ,
-			   7.0 , 8.5 , 9.0 ,
-			   10.5, 11.0, 12.5,
-			   13.0, 14.5, 15.0};
+					   4.5 , 5.0 , 6.5 ,
+					   7.0 , 8.5 , 9.0 ,
+					   10.5, 11.0, 12.5,
+					   13.0, 14.5, 15.0};
 
-	cout<<"Diferenca das medias: "<<calcDifMedias(mat, 5)<<endl;
+	cout << "Diferenca das medias: " << calcDifMedias(mat, 5) << endl;
 
 	return 0;
 }
