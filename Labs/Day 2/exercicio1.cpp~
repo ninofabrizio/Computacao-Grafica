@@ -44,7 +44,7 @@ int calcBCallback (Ihandle *b) {
     cout << "Altura: " << h << endl;
     cout << "Iteracoes: " << it << endl;
     cout << "R: " << r << endl;
-    cout << "I: " << i << endl << endl;
+    cout << "I: " << i << endl;
 
     return IUP_DEFAULT;
 }
