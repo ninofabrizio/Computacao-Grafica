@@ -1,8 +1,6 @@
 /* 
  * File:   exercicio1.cpp
  * Author: Nino
- *
- * FAZER O DE OPEN NO FINAL DO SLIDE 2!!!!!!!!!
  */
 
 #include <cstdlib>
@@ -21,6 +19,8 @@ Ihandle *iteracoesTB;
 Ihandle *rTB;
 
 Ihandle *iTB;
+
+Ihandle *dlg;
 
 // Função callback para o botão Calcular
 int calcBCallback (Ihandle *b) {
@@ -45,6 +45,24 @@ int calcBCallback (Ihandle *b) {
     cout << "Iteracoes: " << it << endl;
     cout << "R: " << r << endl;
     cout << "I: " << i << endl << endl;
+
+    return IUP_DEFAULT;
+}
+
+// Função callback para o botão Open
+int openBCallback (Ihandle *b) {
+
+	// Define posição que vai aparecer
+	IupPopup(dlg, IUP_CURRENT, IUP_CURRENT);
+
+	// Se retorno for diferente de -1, existe um endereço válido
+	if(IupGetInt(dlg, "STATUS") != -1) {
+
+		cout << "OK" << endl;
+		cout << "	VALUE(" << IupGetAttribute(dlg, "VALUE") << ")\n" << endl;
+	}
+	else
+		cout << "Cancelou!\n" << endl;
 
     return IUP_DEFAULT;
 }
@@ -120,16 +138,27 @@ void createWindow( ) {
 
     IupSetCallback(calcB, "ACTION",(Icallback) calcBCallback); // Callback para o botão
 
+	Ihandle * openB = IupButton("Abrir", NULL);
+
+	IupSetCallback(openB, "ACTION", (Icallback) openBCallback);
+
     Ihandle *sairB = IupButton("Sair", NULL);
 
     IupSetCallback(sairB, "ACTION",(Icallback) sairBCallback);
 
-    Ihandle *hboxFour = IupHbox(calcB, sairB, NULL);
+    Ihandle *hboxFour = IupHbox(calcB, openB, sairB, NULL);
 
 
     // Vertical box que reúne todos os horizontal box's
     Ihandle *vbox = IupVbox(hboxOne, hboxTwo, hboxThree, hboxFour, NULL);
 
+	// Definição e atributos da janela para abrir arquivo
+	dlg = IupFileDlg();
+
+	IupSetAttribute(dlg, "DIALOGTYPE", "OPEN");
+	IupSetAttribute(dlg, "TITLE", "IupFileDlg Test");
+	IupSetAttribute(dlg, "FILTER", "*bmp");
+	IupSetAttributes(dlg, "FILTERINFO = Bitmap Files");
 
     // Janela de diálogo onde mostro tudo
     Ihandle *dialogo = IupDialog(vbox);
@@ -151,6 +180,9 @@ int main( int argc, char** argv ) {
     
     //Coloca a IUP em loop.
     IupMainLoop( );
+
+	// Bye bye janela de navegação o/
+	IupDestroy(dlg);
 
     //Fecha a IUP e libera os espacos alocados.
     IupClose( );
