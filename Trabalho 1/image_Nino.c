@@ -39,7 +39,7 @@
 #include <math.h>
 #include <float.h>
 #include <memory.h>
-#include <iup.h>
+#include <iup/iup.h>
 
 #include "image_Nino.h"
 

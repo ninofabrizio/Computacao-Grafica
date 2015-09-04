@@ -27,7 +27,7 @@
  * 
  *  Ignore: libcmt.lib;
  *
- *  Last modification:  Marcelo Gattass, 15ago2013. 
+ *  Last modification:  Nino Tiriticco, 3set2015.
  *
  **/
 /*- Include lib interfaces: ANSI C, IUP and OpenGL ------*/

@@ -37,8 +37,8 @@
 
 #include "iups.h"
 
-#include <gl/gl.h>     /* OpenGL functions*/
-#include <gl/glu.h>    /* OpenGL utilitary functions*/
+#include <GL/gl.h>     /* OpenGL functions*/
+#include <GL/glu.h>    /* OpenGL utilitary functions*/
 #include "image_Nino.h"     /* interface of the image processing functions */
 
 /*- Program context variables(declared as globals to facilitate the comunication in the callback model)-----------*/
