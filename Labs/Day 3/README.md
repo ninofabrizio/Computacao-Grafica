@@ -1,0 +1,8 @@
+# Foco do laboratório:
+
+Criação de uma classe vetor3d que vamos reutilizar em atividades futuras:
+
+- A classe possui pelo menos 3 atributos que representam as coordenadas de um vetor
+- A classe possui pelo menos métodos que representam as principais operações que são realizadas por vetores
+- Treinar o uso de "const" em atributos, parâmetros e métodos
+- Uso de operator para sobrecarregar operações (soma, divisão, etc.)
