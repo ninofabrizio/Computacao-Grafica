@@ -77,11 +77,11 @@ const vetor3d vetor3d::operator* (const double &e) const {
 
 const double vetor3d::operator* (const vetor3d &v) const {
     
-    double xNovo = this->x * v.x;
-    double yNovo = this->y * v.y;
-    double zNovo = this->z * v.z;
+    double x = this->x * v.x;
+    ret.y = this->y * e;
+    ret.z = this->z * e;
     
-    return (xNovo + yNovo + zNovo);
+    return ret;
 }
 
 // Produto vetorial
