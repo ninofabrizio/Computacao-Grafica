@@ -8,6 +8,7 @@
  * métodos da classe vetor3d definida em vetor3d.h.
  */
 
+#include <cmath>
 #include "vetor3d.h"
 
 vetor3d::vetor3d( ){ }
@@ -41,6 +42,8 @@ double vetor3d::getZ () const {
     return z;
 }
 
+// Soma de Vetores -> V3 = V1 + v2
+// Obs.: V3 = ( V1x + V2x , V1y + V2y , V1z + V2z)
 const vetor3d vetor3d::operator+ (const vetor3d &v) const {
     
     vetor3d ret;
@@ -53,6 +56,8 @@ const vetor3d vetor3d::operator+ (const vetor3d &v) const {
     return ret;
 }
 
+// Subtração de Vetores -> V3 = V1 - V2
+// Obs.: V3 = ( V1x - V2x , V1y - V2y , V1z - V2z)
 const vetor3d vetor3d::operator- (const vetor3d &v) const {
     
     vetor3d ret;
@@ -64,6 +69,8 @@ const vetor3d vetor3d::operator- (const vetor3d &v) const {
     return ret;
 }
 
+// Multiplicação por Escalar -> V2 = V1 * e
+// Obs.: V2 = ( V1x * e , V1y * e , V1z * e)
 const vetor3d vetor3d::operator* (const double &e) const {
     
 	vetor3d ret;
@@ -75,21 +82,62 @@ const vetor3d vetor3d::operator* (const double &e) const {
     return ret;
 }
 
-const double vetor3d::operator* (const vetor3d &v) const {
-    
-    double x = this->x * v.x;
-    ret.y = this->y * e;
-    ret.z = this->z * e;
+// Divisão por Escalar -> V2 = V1 / e
+// Obs.: V2 = ( V1x / e , V1y / e , V1z / e)
+const vetor3d vetor3d::operator/ (const double &e) const {
+
+	vetor3d ret;
+
+    ret.x = this->x / e;
+    ret.y = this->y / e;
+    ret.z = this->z / e;
     
     return ret;
 }
 
-// Produto vetorial
-/*const vetor3d vetor3d::operator* ( const vetor3d &v ) const {
+// Produto Escalar -> e = V1 * V2
+// Obs.: e = (V1x * V2x) + (V1y * V2y) + (V1z * V2z)
+const double vetor3d::operator* (const vetor3d &v) const {
     
-    double esc = this->x * v.x;
-    esc = esc + (this->y * v.y);
-    esc = esc + (this->z * v.z);
+    double xNovo = this->x * v.x;
+    double yNovo = this->y * v.y;
+    double zNovo = this->z * v.z;
     
-    return esc;
-}*/
+    return (xNovo + yNovo + zNovo);
+}
+
+// Produto Vetorial -> V3 = V1 & V2
+// Obs.: V1 x V2 = ( (V1y * V2z) - (V2y * V1z) , (V1x * V2z) - (V2x * V1z) , (V1x * V2y) - (V2x * V1y))
+const vetor3d vetor3d::operator& (const vetor3d &v) const {
+    
+	vetor3d ret;
+
+    ret.x = (this->y * v.z) - (v.y * this->z);
+    ret.y = (this->x * v.z) - (v.x * this->z);
+    ret.z = (this->x * v.y) - (v.x * this->y);
+    
+    return ret;
+}
+
+// Norma de um Vetor -> e = V1++
+// Obs.: || V1 || = sqrt(x² + y² + z²)
+const double vetor3d::operator++ (const int) const {
+    
+    double xNovo = pow(this->x, 2);
+    double yNovo = pow(this->y, 2);
+    double zNovo = pow(this->z, 2);
+    
+	double resp = xNovo + yNovo + zNovo;
+
+    return sqrt(resp);
+}
+
+// Área do Paralelogramo -> e = V1 / V2
+// Obs.: A = || V1 x V2 ||
+const double vetor3d::operator/ (const vetor3d &v) const {
+
+	vetor3d temp = *this & v;
+	double resp =  temp++;
+
+	return resp;
+}

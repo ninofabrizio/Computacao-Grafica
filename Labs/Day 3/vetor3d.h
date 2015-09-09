@@ -26,7 +26,7 @@ class vetor3d {
 	* Construtor para copiar atributos de uma instância a uma nova
 	*
 	* @param &orig Referência à instância a ser copiada
-	* @return Nova instância da classe vetor3d
+	* @return      Nova instância da classe vetor3d
 	*/
     vetor3d(const vetor3d &orig);
 
@@ -36,9 +36,9 @@ class vetor3d {
 	* @param x Coordenada x do vetor
 	* @param y Coordenada y do vetor
 	* @param z Coordenada z do vetor
-	* @return Nova instância da classe vetor3d
+	* @return  Nova instância da classe vetor3d
 	*/
-    vetor3d(double x, double y, double z);
+    vetor3d(const double x, const double y, const double z);
     
 	/**
 	* Método que retorna atributo x
@@ -64,50 +64,68 @@ class vetor3d {
     /**
     * Operador da soma
     * 
-    * @param v Segundo vetor da operação
-    * @return  Vetor resultado da operação
+    * @param &v Segundo vetor da operação
+    * @return   Vetor resultado da operação
 	*/
     const vetor3d operator+ (const vetor3d &v) const;
     
      /**
      * Operador da subtração
      * 
-     * @param v Segundo vetor da operação
-     * @return  Vetor resultado da operação
+     * @param &v Segundo vetor da operação
+     * @return   Vetor resultado da operação
      */
     const vetor3d operator- (const vetor3d &v) const;
     
     /**
-    * Operador do produto por escalar
+    * Operador da multiplicação por escalar
     * 
-    * @param e Escalar da operação
-    * @return  Vetor resultado da operação
+    * @param &e Escalar da operação
+    * @return   Vetor resultado da operação
     */
     const vetor3d operator* (const double &e) const;
     
     /**
+    * Operador da divisão por escalar
+    * 
+    * @param &e Escalar da operação
+    * @return   Vetor resultado da operação
+    */
+    const vetor3d operator/ (const double &e) const;
+
+    /**
     * Operador do produto escalar
     * 
-    * @param v Segundo vetor da operação
-    * @return  Escalar resultado da operação
+    * @param &v Segundo vetor da operação
+    * @return   Escalar resultado da operação
     */
     const double operator* (const vetor3d &v) const;
     
     /**
-     * Operador da divisão por escalar
-     * 
-     * @param esc esc com que se faz a operação
-     * @return  vetor resultado da operação
-     */
-    //const vetor3d operator/ ( const vetor3d &v ) const;
+    * Operador do produto vetorial
+    * 
+    * @param &v Segundo vetor da operação
+    * @return   Vetor resultado da operação
+    */
+    const vetor3d operator& (const vetor3d &v) const;
     
-        /**
-     * Operador da norma
-     * 
-     * @param esc esc com que se faz a operação
-     * @return  vetor resultado da operação
-     */
-    //const vetor3d operator% ( const vetor3d &v ) const;
+    /**
+    * Operador da norma do vetor
+	*
+    * @param  Serve para sobrecarregar o operador
+	*		  em V++ (postfix ++). Para sobrecarregar o operador
+	*		  em ++V (prefix ++), o parâmetro precisa ser nulo.
+    * @return Escalar resultado da operação
+    */
+    const double operator++ (const int) const;
+
+    /**
+    * Operador da área do paralelogramo
+    * 
+    * @param &v Segundo vetor da operação
+    * @return   Escalar resultado da operação
+    */
+    const double operator/ (const vetor3d &v) const;
 
 private:
 
