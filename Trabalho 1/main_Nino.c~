@@ -181,7 +181,7 @@ int count_cb(void)
 
 int save_cb(void)
 {
-	 int resp = -1;
+	 int resp;
 	 char *file_name = NULL;
 	 Ihandle* savefile = IupFileDlg();
 
@@ -196,9 +196,7 @@ int save_cb(void)
          IupSetfAttribute(gc.msgbar, "TITLE", "Saving failed/canceled"); 
 		 return IUP_DEFAULT;
 	 }
-
 	 resp = imgWriteBMP(file_name, gc.image);
-
 	 if(resp == 1)
        IupSetfAttribute(gc.msgbar, "TITLE", "Saved %s", strip_path_from_filename(file_name));	   
 	 else

@@ -1015,3 +1015,10 @@ Image* imgBinary( Image* greyImage )
 	}
 	return imgFinal;
 }
+
+
+
+
+
+
+
