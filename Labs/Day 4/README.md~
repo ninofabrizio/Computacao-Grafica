@@ -9,4 +9,4 @@ Estudo sobre o OpenGL, conceitos e seu uso:
 ---------------------------------------------------------------
 ## Como compilar/executar no terminal:
 - g++ nome.cpp -lGL -lGLU -lglut -o nomeexe
-- ./nomeexe
+- ./nomexe

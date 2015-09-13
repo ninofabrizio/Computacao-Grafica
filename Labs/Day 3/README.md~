@@ -18,5 +18,4 @@ Criação de uma classe vetor3d que vamos reutilizar em atividades futuras:
 
 ------------------------------------------------------------------------
 ## Como compilar/executar no terminal:
-- g++ main.cpp vetor3d.cpp -o main
-- ./main
+-

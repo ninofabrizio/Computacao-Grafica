@@ -12,6 +12,6 @@ Para nomear o executável gerado:
 - g++ nome.cpp -o nomeexe
 - ./nomeexe
 
-Para gerar/usar um executável default:
+Para usar um executável default:
 - g++ nome.cpp
 - ./a.out

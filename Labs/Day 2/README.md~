@@ -9,5 +9,5 @@ Introdução e estudo da ferramenta IUP (Portable User Interface), usando lingua
 
 -------------------------------------
 ## Como compilar/executar no terminal:
-- g++ nome.cpp -o nomeexe
+- g++ nome.cpp -o nomexe
 - ./nomeexe
