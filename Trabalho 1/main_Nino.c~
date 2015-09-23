@@ -241,6 +241,8 @@ int count_cb(void) {
 
 	IupSetfAttribute(gc.msgbar, "TITLE", "Objects in this picture: %d", num);
 
+	printf("\n\nObjects in this picture: %d\n\n", num);
+
 	return IUP_DEFAULT;
 }
 
