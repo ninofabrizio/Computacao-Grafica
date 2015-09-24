@@ -1,12 +1,14 @@
-# Objetivo:
+# Trabalho 1
+
+## Objetivo:
 --------------------------------
 Mudar o programa original constituído pelos arquivos main_Nino.c , image_Nino.c e image_Nino.h para que o mesmo saiba contar objetos numa imagem, o importante é que ele conte certo na maioria das vezes.
 
-# Como pode ser feito:
+## Como pode ser feito:
 --------------------------------
 É permitido alcançar o objetivo colocando mais botões e implementando mais funções.
 
-# O que implementei:
+## O que implementei:
 --------------------------------
 - main_Nino.c:
 	- Novo Handle "change" que representa um novo botão na interface
@@ -28,7 +30,7 @@ Mudar o programa original constituído pelos arquivos main_Nino.c , image_Nino.c
 
 Obs.: Para mais informações sobre as Functions, ver documentação em image_Nino.h
 
-# Como compilar/executar:
+## Como compilar/executar:
 -------------------------------
 No terminal do Ubuntu, usar comando:
 

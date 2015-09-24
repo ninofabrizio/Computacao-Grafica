@@ -25,7 +25,8 @@ Mudar o programa original constituído pelos arquivos main_Nino.c , image_Nino.c
 	- Nova Function privada "hitDilatation" chamada por "imgDilatation"
 	- Nova Function privada "markAsRead" chamada por "imgCount"
 	- Nova Function privada "changeNumber" chamada por "markAsRead"
-	- Nova Function privada "hitErotion" chamada por "imgErotion"
+
+Obs.: Para mais informações sobre as Functions, ver documentação em image_Nino.h
 
 # Como compilar/executar:
 -------------------------------
