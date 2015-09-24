@@ -1598,15 +1598,10 @@ int imgCount(Image *img) {
 
 		printf("\n\nObjects in this picture: %d\n\n", cont);
 
-		//for(x = 0; x < w; x++)
-        //	free(map[x]);
+		for(x = 0; x < w; x++)
+        	free(map[x]);
       
-		//free(map);
+		free(map);
 
 		return cont;
 }
-
-
-
-
-
