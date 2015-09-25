@@ -1,0 +1,9 @@
+# Foco do laboratório:
+
+Estudo sobre o IUP + Orientação a Objetos e IUP + OpenGL + Orientação a Objetos:
+- Como usar handles do IUP sem usar variáveis globais (através de atributos ao diálogo)
+
+---------------------------------------------------------------
+## Como compilar/executar no terminal:
+- g++ nome.cpp -lGL -lGLU -lglut -o nomeexe
+- ./nomeexe
