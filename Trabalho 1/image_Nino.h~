@@ -279,4 +279,13 @@ Image * imgErotion(Image *imgBefore);
 **/
 Image * imgDilatation(Image *imgBefore);
 
+/**
+*	Diz quantos objetos aparecem na imagem (usa preto como referencia).
+*
+*	@param img		    Handle para a imagem.
+*
+*   @return Inteiro representando o numero de objetos.
+**/
+int imgCount(Image *img);
+
 #endif

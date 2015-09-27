@@ -50,6 +50,9 @@ struct global_context {
 	int      width,height;              /* width and height of the canvas  */
 } gc = { NULL, NULL, NULL, NULL, 640, 480 };
 
+/*- Copy of the gc's image to be loaded----TODO---*/
+Image* image_copy = NULL;
+
 /*------------------------------------------*/
 /* IUP Callbacks                            */
 /*------------------------------------------*/
@@ -134,10 +137,6 @@ int load_cb(void)
 	   repaint_cb(gc.canvas);
        IupSetfAttribute(gc.msgbar, "TITLE", "%s", strip_path_from_filename(file_name));
 
-	//TODO	if(imgCountColor(gc.image, 0.0) != 2) {
-
-	//		IupSetfAttribute(gc.msgbar, "TITLE", "%d", imgCountColor(gc.image, 0.0));
-	//	}
 	} else
 	   IupSetfAttribute(gc.msgbar, "TITLE", "Can't open %s", strip_path_from_filename(file_name)); 
 
@@ -244,33 +243,35 @@ int count_cb(void) {
 	return IUP_DEFAULT;
 }
 
-int save_cb(void)
+int save_image_cb(void)
 {
-	 int resp = -1;
-	 char *file_name = NULL;
-	 Ihandle* savefile = IupFileDlg();
+	if(gc.image == NULL) {
 
-	 IupSetAttribute(savefile, IUP_TITLE, "File Saving"  );
- 	 IupSetAttribute(savefile, IUP_DIALOGTYPE, IUP_SAVE);
-	 IupSetAttribute(savefile, IUP_FILTER, "*.bmp" );
-	 IupSetAttribute(savefile, IUP_FILTERINFO, "Save a BMP file" );
-	 IupPopup(savefile, IUP_CENTER, IUP_CENTER); 
-    
-	 file_name = IupGetAttribute(savefile, IUP_VALUE);
-     if (!file_name) {
-         IupSetfAttribute(gc.msgbar, "TITLE", "Saving failed/canceled"); 
-		 return IUP_DEFAULT;
-	 }
+		IupSetfAttribute(gc.msgbar, "TITLE", "There's no image to save");
+		return IUP_DEFAULT;
+	}
 
-	 resp = imgWriteBMP(file_name, gc.image);
+	image_copy = imgCopy(gc.image);
+	IupSetfAttribute(gc.msgbar, "TITLE", "State of the image saved"); 
 
-	 if(resp == 1)
-       IupSetfAttribute(gc.msgbar, "TITLE", "Saved %s", strip_path_from_filename(file_name));	   
-	 else
-	   IupSetfAttribute(gc.msgbar, "TITLE", "Couldn't save %s", strip_path_from_filename(file_name)); 
+    return IUP_DEFAULT;
+}
 
-     repaint_cb(gc.canvas);   /* repaint canvas */
-     return IUP_DEFAULT;
+// TODO
+
+int load_image_cb(void) {
+
+	if(image_copy == NULL) {
+
+		IupSetfAttribute(gc.msgbar, "TITLE", "There's no copy of image saved");
+		return IUP_DEFAULT;
+	}
+
+	gc.image = imgCopy(image_copy);
+	repaint_cb(gc.canvas);
+	IupSetfAttribute(gc.msgbar, "TITLE", "Last state saved is loaded");
+
+	return IUP_DEFAULT;
 }
 
 int exit_cb(void)
@@ -295,9 +296,10 @@ Ihandle* InitToolbar(void)
 	 Ihandle* erode = IupSButton("img/erode.bmp", "do erotion in the binary image", (Icallback)erode_cb);
 	 Ihandle* dilate = IupSButton("img/dilate.bmp", "do dilatation in the binary image", (Icallback)dilate_cb);
 	 Ihandle* count = IupSButton("img/count.bmp", "give number of objects in this image", (Icallback)count_cb);
-	 Ihandle* save = IupSButton("img/file_save.bmp", "save image in a BMP file", (Icallback)save_cb);
+	 Ihandle* save_image = IupSButton("img/file_save.bmp", "save current state of the image", (Icallback)save_image_cb);
+	 Ihandle* load_image = IupSButton("img/pencil.bmp", "load last state of image saved", (Icallback)load_image_cb);
 
-     toolbar=IupHbox(load,binary,change,erode,dilate,count,save, NULL);
+     toolbar=IupHbox(load,binary,change,erode,dilate,count,save_image,load_image, NULL);
 
      return toolbar;
 }

@@ -318,45 +318,58 @@ void changeNumber(int **map, int w, int h, int major, int lesser) {
 /***************************************************************************
 * Sees if area has objects and marks them, changing counter if needed TODO *
 ***************************************************************************/ 
-int markAsRead(int **map, int w, int h, int cont, int x, int y) {
+int markAsRead(int **map, int w, int h, int *neighbors, int cont, int x, int y) {
 
-	int i, j;
-	int objs = cont, foundFirst = -1, lesserNum = 0;
+	int i, xn = x, yn = y;
+	int objs = cont, lesserNum = 0, foundFirst = -1;
 
-	for(j = y; j <= (y + 2); j++) {
-		for(i = x; i <= (x + 2); i++) {
+	for(i = 0; i < 3; i++) {
 
-			if(map[i][j] == 0) { // if a pixel not marked yet
+		// he is frontground
+		if(neighbors[i] == 0) {
+
+			if(i == 1) {
+
+				xn = x - 1;
+				yn = y;
+			}
+			else if(i == 2) {
+
+				xn = x;
+				yn = y - 1;
+			}
+
+			if(map[xn][yn] == 0) { // if a pixel not marked yet
 				
 				if(foundFirst == -1) { // didnt found object in my area yet
 
 					foundFirst = 0;
 					objs++;
-					map[i][j] = objs;
+					map[xn][yn] = objs;
 					lesserNum = objs;
 				}
 				else
-					map[i][j] = lesserNum;
+					map[xn][yn] = lesserNum;
 			}
-			else if(map[i][j] > 0) {
+			else if(map[xn][yn] > 0) {
 
 				if(lesserNum == 0) { // first object found in my area
 
 					foundFirst = 0;
-					lesserNum = map[i][j];
+					lesserNum = map[xn][yn];
 				}
-				else if(map[i][j] < lesserNum) { // new lesser number
+				else if(map[xn][yn] < lesserNum) { // new lesser number
 
-					changeNumber(map, w, h, lesserNum, map[i][j]); // newer object its older one
+					changeNumber(map, w, h, lesserNum, map[xn][yn]); // newer object its older one
 					objs--;
-					lesserNum = map[i][j];
+					lesserNum = map[xn][yn];
 				}
-				else if(map[i][j] > lesserNum) {
+				else if(map[xn][yn] > lesserNum) {
 
-					changeNumber(map, w, h, map[i][j], lesserNum);
+					changeNumber(map, w, h, map[xn][yn], lesserNum);
 					objs--;
 				}
-			}			
+			}
 		}
 	}
 
@@ -1540,68 +1553,75 @@ int imgCount(Image *img) {
 		int w = imgGetWidth(img);
 		int h = imgGetHeight(img);
 
-		// To classify black pixels as objects by a number (cont)
-		// 0 == black pixel not marked; -1 == white pixel; n > 0 number of object
+		// To classify frontground pixels as objects by a number (cont)
+		// 0 == frontground pixel not marked; -1 == background pixel; other numbers > 0 number of objects
 		int **map;
 		int x, y;
 
-		float  pix1[3], pix2[3], pix3[3], pix4[3], pix5[3], pix6[3], pix7[3], pix8[3], pix9[3];
+		float  pix1[3], pix2[3], pix3[3];
 
 		int cont = 0;
 
-      	map = (int **) malloc(w * sizeof(int));
+      	map = (int **) malloc(w * sizeof(int *));
 
       	for (x = 0; x < w; x++)
 	        map[x] = (int *) malloc(h * sizeof(int));
 
 		for(y = 0; y < h; y++)
 			for(x = 0; x < w; x++)
-				map[x][y] = cont; // mark everyone as black
+				map[x][y] = 0; // mark everyone as background
 
-		for (y = 0; y < (h - 2); y++)	{
-			for (x = 0; x < (w - 2); x++) {
+		for (y = 0; y < h; y++)	{
+			for (x = 0; x < w; x++) {
+
+				// in this case, -1 means its background or out of the image
+				int neighbors[3] = {0, 0, 0};
 
 				imgGetPixel3fv(img, x, y, pix1);
-				imgGetPixel3fv(img, x, y + 1, pix2);
-				imgGetPixel3fv(img, x, y + 2, pix3);
-				imgGetPixel3fv(img, x + 1, y, pix4);
-				imgGetPixel3fv(img, x + 1, y + 1, pix5);
-				imgGetPixel3fv(img, x + 1, y + 2, pix6);
-				imgGetPixel3fv(img, x + 2, y, pix7);
-				imgGetPixel3fv(img, x + 2, y + 1, pix8);
-				imgGetPixel3fv(img, x + 2, y + 2, pix9);
 
-				// marking as white the background
-				if(pix1[0] == 1)
-					map[x][y] = -1;
-				if(pix2[0] == 1)
-					map[x][y + 1] = -1;
-				if(pix3[0] == 1)
-					map[x][y + 2] = -1;
-				if(pix4[0] == 1)
-					map[x + 1][y] = -1;
-				if(pix5[0] == 1)
-					map[x + 1][y + 1] = -1;
-				if(pix6[0] == 1)
-					map[x + 1][y + 2] = -1;
-				if(pix7[0] == 1)
-					map[x + 2][y] = -1;
-				if(pix8[0] == 1)
-					map[x + 2][y + 1] = -1;
-				if(pix9[0] == 1)
-					map[x + 2][y + 2] = -1;
+				// current pixel must be frontground
+				if(pix1[0] == 0) {
 
-				cont = markAsRead(map, w, h, cont, x, y);
+					neighbors[0] = 0;
 
+					// Marking neighbor A
+					if((x - 1) > 0) {
+
+						imgGetPixel3fv(img, x - 1, y, pix2);
+						if(pix2[0] == 1) {
+
+							neighbors[1] = -1;
+
+							if(map[x - 1][y] == 0)
+								map[x - 1][y] = -1;
+						}
+					}
+					else
+						neighbors[1] = -1;
+					// Marking neighbor C
+					if((y - 1) > 0) {
+
+						imgGetPixel3fv(img, x, y - 1, pix3);
+						if(pix3[0] == 1) {
+
+							neighbors[2] = -1;
+
+							if(map[x][y - 1] == 0)
+								map[x][y - 1] = -1;
+						}
+					}
+					else
+						neighbors[2] = -1;
+
+					cont = markAsRead(map, w, h, neighbors, cont, x, y);
+				}
 			}
 		}
 
-		printf("\n\nObjects in this picture: %d\n\n", cont);
-
-		//for(x = 0; x < w; x++)
-        //	free(map[x]);
+		for(x = 0; x < w; x++)
+        	free(map[x]);
       
-		//free(map);
+		free(map);
 
 		return cont;
 }

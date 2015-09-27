@@ -280,7 +280,7 @@ Image * imgErotion(Image *imgBefore);
 Image * imgDilatation(Image *imgBefore);
 
 /**
-*	Diz quantos objetos aparecem na imagem (usa preto como referencia).
+*	Diz quantos objetos aparecem na imagem (pixel preto como frontground).
 *
 *	@param img		    Handle para a imagem.
 *
